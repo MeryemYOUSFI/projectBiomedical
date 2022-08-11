@@ -3,5 +3,10 @@ npm-debug.log
 node_modules
 .sass-cache
 Docker/
+<<<<<<< HEAD
 /vendor/
 /vendors/
+=======
+/vendor
+/vendors
+>>>>>>> 2c516dbb2aa205cf3db6247385288539bbba358c

@@ -107,11 +107,11 @@ if (isset($_POST['username'])){
                 <form action="" method="post" name="login" >
                         <div class="form-group">
                             <label>Nom d'utilisateur </label>
-                            <input type="text" class="form-control" name="username" >
+                            <input type="text" class="form-control" name="username" placeholder="nom" >
                         </div>
                             <div class="form-group">
                                 <label>Mot de passe </label>
-                                <input type="password" class="form-control" name="password" >
+                                <input type="password" class="form-control" name="password" placeholder="password"  >
                         </div>
                                 <div class="checkbox">
                                     <label>
@@ -120,7 +120,11 @@ if (isset($_POST['username'])){
                           
 
                                 </div>
+
+                               
+
                                 <button type="submit" name="submit" class="btn btn-outline-primary"  style="border: 3px solid #1977cc;border-radius: 35px">S'enregistrer </button>
+
                                 <div class="social-login-content">
                                   
                                 </div>
