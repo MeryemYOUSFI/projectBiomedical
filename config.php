@@ -1,6 +1,6 @@
 <?php
 // Informations d'identification
-define('DB_SERVER', 'ftp.toubkalit.com');
+define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'toubkali_toubkal');
 define('DB_PASSWORD', '2ejCD1zp72');
 define('DB_NAME', 'toubkali_medcal');
