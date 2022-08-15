@@ -554,7 +554,7 @@
 								<div  class="text-danger alert alert-light "  >
                                 <div style="height=10% ">
 
-                               <div id="chartContainer">
+								<div id="chartContainer">
 
 
                              
@@ -575,14 +575,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <script type="text/javascript" src="jquery.js"></script>
+		<script src="https://d3js.org/d3.v7.min.js"></script>
         <script>
 
 $(document).ready(function() {
-    $('#example').DataTable();
-    
-
-    
+    $('#example').DataTable(); 
 } );
+
 function fat(nombrecapture){
 
 //vider la zone des charts
@@ -590,269 +589,283 @@ $("#chartContainer").html("");
 
 //pour chaque capture creer un chart element 
 for (let i = 0; i < nombrecapture; i++) {
-	if (i==0) {
-		var chart = document.createElement('canvas');
-        chart.id = 'LM200';
-        chart.className = 'LM200';
-        document.getElementById('chartContainer').appendChild(chart);
-	}
-  
-	if (i==1) {
-	    var chart = document.createElement('canvas');
-	    chart.id = 'LM393';
-	    chart.className = 'LM393';
-	    document.getElementById('chartContainer').appendChild(chart);	
-	}
- 
-	if (i==2) {
-		var chart = document.createElement('canvas');
-	    chart.id = 'pT100';
-	    chart.className = 'pT100';
-	    document.getElementById('chartContainer').appendChild(chart);
-	}
-
-  
+		if (i==0) {
+			var chart = document.createElement('canvas');
+			chart.id = 'LM200';
+			chart.className = 'LM200';
+			document.getElementById('chartContainer').appendChild(chart);
+		}
+	
+		if (i==1) {
+			var chart = document.createElement('canvas');
+			chart.id = 'LM393';
+			chart.className = 'LM393';
+			document.getElementById('chartContainer').appendChild(chart);	
+		}
+	
+		if (i==2) {
+			var chart = document.createElement('canvas');
+			chart.id = 'pT100';
+			chart.className = 'pT100';
+			document.getElementById('chartContainer').appendChild(chart);
+		}
+		
 }
+let filename = 'LM200.csv';
 
-
-   var tab = [];
-            var html = "";
-            var x_tab = [];
-            var y_tab = [];
-          
-
-
-   var ws = new WebSocket("ws://localhost:5002");
-            
-            
-            ws.onmessage = function (evt) {
-                tab = JSON.parse(evt.data)[0];
-
-                if(tab["LM200"] !== undefined) {
-	                x_tab.push(Number(tab["LM200"].temps));
-	                y_tab.push(Number(tab["LM200"].tention));
-
-	                /*$( ".myChart" ).each(function() {
-						   
-					});*/
-
+		// all of your code should be inside this command
+		d3.csv(filename).then(function(loadedData) {
+			
+				let data =   [];
+				let labels = [];
+				
+				// use a for-loop to load the data from the
+				// file into our lists
+				for (let i=0; i<loadedData.length; i++) {
+					let x_tab =     loadedData[i].tention;
+					let y_tab = loadedData[i].temps;
+					labels.push(x_tab);
+			
+					// and mean temp to the data
+					data.push(y_tab); 
+					console.log(data)
+					
+		}
+						// basic line chart settings
 					if($("#LM200").length > 0){
 
-						var ctx = $("#LM200");
-				       var myChart = new Chart(ctx, {
-				        type: 'line',
-				                data: {
-				                    labels: x_tab,
-				                    datasets: [{
-				                        data: y_tab,
-				                      
-				                        borderColor: [
-				                            'rgba(255, 99, 132, 1)',
-				                            'rgba(54, 162, 235, 1)',
-				                            'rgba(255, 206, 86, 1)',
-				                            'rgba(75, 192, 192, 1)',
-				                            'rgba(153, 102, 255, 1)',
-				                            'rgba(255, 159, 64, 1)'
-				                        ],
-				                        borderWidth: 1
-				                    }]
-				                },
-				                options: {
-				                 
-				                    title: {
-				                        display: true,
-				                        text: '',
-				                        fontSize: 21,
-				                        padding: 20,
-				                        fontFamily: 'Calibri',
-				                        tooltips: {enabled: false},
-				                        hover: {mode: null},
-				                    },  
-				                    legend: {
-				                        display: false
-				                       
-				                       
-				                    },
-				                    type: 'line',
-				                    scales: {
-				                       
-				                    yAxes: [{
-				                            ticks: {
-				                                beginAtZero: true
-				                            },  
-				                            scaleLabel: {
-				                              display: true,
-				                              labelString: 'la concentration d’alcool dans la haleine'
-				                            }
-				                    }],
-				                    xAxes: [{
-				                            scaleLabel: {
-				                              display: true,
-				                              labelString: 'temps'
-				                            }
-				                    }],
-				                    }
-				                }
-				            });
+					var ctx = $("#LM200");
+					var myChart = new Chart(ctx, {
+					type: 'line',
+							data: {
+								labels: labels,
+								datasets: [{
+									data: data,
+								
+									borderColor: [
+										'rgba(255, 99, 132, 1)',
+										'rgba(54, 162, 235, 1)',
+										'rgba(255, 206, 86, 1)',
+										'rgba(75, 192, 192, 1)',
+										'rgba(153, 102, 255, 1)',
+										'rgba(255, 159, 64, 1)'
+									],
+									borderWidth: 1
+								}]
+							},
+							options: {
+							
+								title: {
+									display: true,
+									text: '',
+									fontSize: 21,
+									padding: 20,
+									fontFamily: 'Calibri',
+									tooltips: {enabled: false},
+									hover: {mode: null},
+								},  
+								legend: {
+									display: false
+									
+									
+								},
+								type: 'line',
+								scales: {
+									
+								yAxes: [{
+										ticks: {
+											beginAtZero: true
+										},  
+										scaleLabel: {
+										display: true,
+										labelString: 'la concentration d’alcool dans la haleine'
+										}
+								}],
+								xAxes: [{
+										scaleLabel: {
+										display: true,
+										labelString: 'temps'
+										}
+								}],
+								}
+							}
+						});
 					}
-                       
-
-                }
 
 
+					});
+					let filename2 = 'LM393.csv';
 
-
-                if(tab["LM393"] !== undefined) {
-	                x_tab.push(Number(tab["LM393"].temps));
-	                y_tab.push(Number(tab["LM393"].tention));
-
-	                /*$( ".myChart" ).each(function() {
-						   
-					});*/
-
+		// all of your code should be inside this command
+		d3.csv(filename2).then(function(loadedData) {
+			
+				let data =   [];
+				let labels = [];
+				
+				// use a for-loop to load the data from the
+				// file into our lists
+				for (let i=0; i<loadedData.length; i++) {
+					let x_tab =     loadedData[i].tention;
+					let y_tab = loadedData[i].temps;
+					labels.push(x_tab);
+			
+					// and mean temp to the data
+					data.push(y_tab); 
+					console.log(data)
+					
+		}
+						// basic line chart settings
 					if($("#LM393").length > 0){
 
-						var ctx = $("#LM393");
-				       var myChart = new Chart(ctx, {
-				        type: 'bar',
-				                data: {
-				                    labels: x_tab,
-				                    datasets: [{
-				                        data: y_tab,
-				                      
-				                        borderColor: [
-				                            'rgba(255, 99, 132, 1)',
-				                            'rgba(54, 162, 235, 1)',
-				                            'rgba(255, 206, 86, 1)',
-				                            'rgba(75, 192, 192, 1)',
-				                            'rgba(153, 102, 255, 1)',
-				                            'rgba(255, 159, 64, 1)'
-				                        ],
-				                        borderWidth: 1
-				                    }]
-				                },
-				                options: {
-				                 
-				                    title: {
-				                        display: true,
-				                        text: '',
-				                        fontSize: 21,
-				                        padding: 20,
-				                        fontFamily: 'Calibri',
-				                        tooltips: {enabled: false},
-				                        hover: {mode: null},
-				                    },  
-				                    legend: {
-				                        display: false
-				                       
-				                       
-				                    },
-				                    type: 'line',
-				                    scales: {
-				                       
-				                    yAxes: [{
-				                            ticks: {
-				                                beginAtZero: true
-				                            },  
-				                            scaleLabel: {
-				                              display: true,
-				                              labelString: 'tention'
-				                            }
-				                    }],
-				                    xAxes: [{
-				                            scaleLabel: {
-				                              display: true,
-				                              labelString: 'temps'
-				                            }
-				                    }],
-				                    }
-				                }
-				            });
+					var ctx = $("#LM393");
+					var myChart = new Chart(ctx, {
+					type: 'line',
+							data: {
+								labels: labels,
+								datasets: [{
+									data: data,
+								
+									borderColor: [
+										'rgba(255, 99, 132, 1)',
+										'rgba(54, 162, 235, 1)',
+										'rgba(255, 206, 86, 1)',
+										'rgba(75, 192, 192, 1)',
+										'rgba(153, 102, 255, 1)',
+										'rgba(255, 159, 64, 1)'
+									],
+									borderWidth: 1
+								}]
+							},
+							options: {
+							
+								title: {
+									display: true,
+									text: '',
+									fontSize: 21,
+									padding: 20,
+									fontFamily: 'Calibri',
+									tooltips: {enabled: false},
+									hover: {mode: null},
+								},  
+								legend: {
+									display: false
+									
+									
+								},
+								type: 'line',
+								scales: {
+									
+								yAxes: [{
+										ticks: {
+											beginAtZero: true
+										},  
+										scaleLabel: {
+										display: true,
+										labelString: 'la concentration d’alcool dans la haleine'
+										}
+								}],
+								xAxes: [{
+										scaleLabel: {
+										display: true,
+										labelString: 'temps'
+										}
+								}],
+								}
+							}
+						});
 					}
-                       
-
-                }
 
 
+					});
+							let filename3 = 'pT100.csv';
 
-                if(tab["pT100"] !== undefined) {
-	                x_tab.push(Number(tab["pT100"].temps));
-	                y_tab.push(Number(tab["pT100"].tention));
-
-	                /*$( ".myChart" ).each(function() {
-						   
-					});*/
-
+		// all of your code should be inside this command
+		d3.csv(filename3).then(function(loadedData) {
+			
+				let data =   [];
+				let labels = [];
+				
+				// use a for-loop to load the data from the
+				// file into our lists
+				for (let i=0; i<loadedData.length; i++) {
+					let x_tab =     loadedData[i].tention;
+					let y_tab = loadedData[i].temps;
+					labels.push(x_tab);
+			
+					// and mean temp to the data
+					data.push(y_tab); 
+					console.log(data)
+					
+		}
+						// basic line chart settings
 					if($("#pT100").length > 0){
 
-						var ctx = $("#pT100");
-				       var myChart = new Chart(ctx, {
-				        type: 'line',
-				                data: {
-				                    labels: x_tab,
-				                    datasets: [{
-				                        data: y_tab,
-				                      
-				                        borderColor: [
-				                            'rgba(255, 99, 132, 1)',
-				                            'rgba(54, 162, 235, 1)',
-				                            'rgba(255, 206, 86, 1)',
-				                            'rgba(75, 192, 192, 1)',
-				                            'rgba(153, 102, 255, 1)',
-				                            'rgba(255, 159, 64, 1)'
-				                        ],
-				                        borderWidth: 1
-				                    }]
-				                },
-				                options: {
-				                 
-				                    title: {
-				                        display: true,
-				                        text: '',
-				                        fontSize: 21,
-				                        padding: 20,
-				                        fontFamily: 'Calibri',
-				                        tooltips: {enabled: false},
-				                        hover: {mode: null},
-				                    },  
-				                    legend: {
-				                        display: false
-				                       
-				                       
-				                    },
-				                    type: 'line',
-				                    scales: {
-				                       
-				                    yAxes: [{
-				                            ticks: {
-				                                beginAtZero: true
-				                            },  
-				                            scaleLabel: {
-				                              display: true,
-				                              labelString: 'Frequence Cardiaque'
-				                            }
-				                    }],
-				                    xAxes: [{
-				                            scaleLabel: {
-				                              display: true,
-				                              labelString: 'temps'
-				                            }
-				                    }],
-				                    }
-				                }
-				            });
+					var ctx = $("#pT100");
+					var myChart = new Chart(ctx, {
+					type: 'line',
+							data: {
+								labels: labels,
+								datasets: [{
+									data: data,
+								
+									borderColor: [
+										'rgba(255, 99, 132, 1)',
+										'rgba(54, 162, 235, 1)',
+										'rgba(255, 206, 86, 1)',
+										'rgba(75, 192, 192, 1)',
+										'rgba(153, 102, 255, 1)',
+										'rgba(255, 159, 64, 1)'
+									],
+									borderWidth: 1
+								}]
+							},
+							options: {
+							
+								title: {
+									display: true,
+									text: '',
+									fontSize: 21,
+									padding: 20,
+									fontFamily: 'Calibri',
+									tooltips: {enabled: false},
+									hover: {mode: null},
+								},  
+								legend: {
+									display: false
+									
+									
+								},
+								type: 'line',
+								scales: {
+									
+								yAxes: [{
+										ticks: {
+											beginAtZero: true
+										},  
+										scaleLabel: {
+										display: true,
+										labelString: 'la concentration d’alcool dans la haleine'
+										}
+								}],
+								xAxes: [{
+										scaleLabel: {
+										display: true,
+										labelString: 'temps'
+										}
+								}],
+								}
+							}
+						});
 					}
-                       
-
-                }
-               
-                
-
-                
-                
-            };
 
 
+					});
+
+					
+	
+	
+
+  
 }
         
         </script>
