@@ -382,22 +382,26 @@
 			$sql50 ="select c.type,a.frequence,a.branche,c.photo from capteur c,association a where
 			c.id=a.idc and idb='$ta'";
 			?>
-			<div class="container">
+			
 			<thead  class="table-light" >
-				<th>REFERENCE BOITIER</th>
+			
+				<td><b>Référence boitier</b> : 
+				     <span class="weak"><?php echo $fetch3['ref']?></td>
+				
+				</thead>
+					
+				<thead  class="table-light" >
+				
+				<td><b>Date</b>        <span>      :  </span>             <?php echo $fetch1['datedebut']?></td>
 				</thead>
 				
-				<tr><td><?php echo $fetch3['ref']?></td></tr>
 				<thead  class="table-light" >
-				<th>DATE</th>
+				<td><b>Nombre capteurs</b> :
+				 <?php echo $idb ?></td>
 				</thead>
-				<tr><td><?php echo $fetch1['datedebut']?></td></tr>
-				<thead  class="table-light" >
-				<th>NOMBRE CAPTEURS</th>
-				</thead>
-				<tr><td><?php echo $idb ?></td></tr>
-				<thead  class="table-light" >
-			<th>LISTE DES CAPTEURS </thead>
+				
+				
+			<td><b>Liste des capteurs </b></td>
 			<div class="row">
 				<table>
 					<thead>
@@ -953,7 +957,7 @@ var as = JSON.parse($('option:selected', this).attr('data-assoc'));
 			   "            Référence de capteur : " + value.ref +"   "  +
 			    "           Fréquence de capteur :" +value.frequence +"   "  +
 				 "          Branche :  "+value.branche + "   "  +
-				 "*************"
+				 "*****"
 		  }).appendTo('.listassoc');
 		 
 		});
