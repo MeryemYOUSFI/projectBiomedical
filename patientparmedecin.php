@@ -347,156 +347,160 @@
 	<td><input type="submit" class="btn btn-outline-dark" style="width:160px;text-align: center; " data-toggle="modal" data-target="#update<?php echo $fetch['id']?>" onclick="$('.typebassoc').change();"  value ="Reaffecter un Boitier ">  <input type="submit" class="btn btn-outline-danger deletebtn" data-toggle="modal" data-target="#de<?php echo $fetch['id']?>" value ="Retirer Boitier"></td>
 
     <td>
-						<button  class="btn btn-outline-primary" data-toggle="modal"  data-target="#up<?php echo $fetch['id']?>">Voir détails boitier </button>
+	<button  class="btn btn-outline-primary" data-toggle="modal"  data-target="#up<?php echo $fetch['id']?>">Voir détails de boitier </button>
 			
 					
-						<div class="modal fade" id="up<?php echo $fetch['id']?>"  style="width=1000px" aria-hidden="true">
-						<div class="modal-dialog modal-lg">
-							
-							<div class="modal-content modal-lg" >
-								<div  class="text-dark alert alert-light ">
-								<label  ><Strong> INFORMATION BOITIER </Strong></label></div>
-								<table id="example" class="table table-hover">
-									<tbody>
-									<?php
-						$id = $fetch['id'];
-						$sql1 = $conn->prepare("select * from `patientboitier` WHERE `idp`  in (select `id` from `patient` where `id`='$id')");
-						$sql1->execute();
-                        $sql3 = $conn->prepare("select * from `boitier` WHERE `id`  in (select `idb` from `patientboitier` where `idp`='$id')");
-						$sql3->execute();
-						$fetch3=$sql3->execute();
-						
-						
-						
-						  
-					while($fetch1 = $sql1->fetch()  ){
-                        $fetch3=$sql3->fetch();
-						
-						        
-			
-			
-            $sql30="select count(idc) as id  from `association` where idb in (select id from `boitier` WHERE `id`  in (select `idb` from `patientboitier` where `idp`='$id'))";
-            $stmt1 = $conn->query($sql30);
-            $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
-            $idb=$row1['id'];
-			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			
-			 
-			$ta=$fetch3['id'];
-			$sql50 ="select c.type,a.frequence,a.branche,c.photo from capteur c,association a where
-			c.id=a.idc and idb='$ta'";
-			?>
-			
-			<thead  class="table-light" >
-			
-				<td><b>Référence boitier</b> : 
-				     <span class="weak"><?php echo $fetch3['ref']?></td>
+			<div class="modal fade" id="up<?php echo $fetch['id']?>"  style="width=1000px" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
 				
-				</thead>
-					
-				<thead  class="table-light" >
-				
-				<td><b>Date</b>        <span>      :  </span>             <?php echo $fetch1['datedebut']?></td>
-				</thead>
-				
-				<thead  class="table-light" >
-				<td><b>Nombre capteurs</b> :
-				 <?php echo $idb ?></td>
-				</thead>
-				
-				
-			<td><b>Liste des capteurs </b></td>
-			<div class="row">
-				<table>
-					<thead>
-					<th>Type</th>
-					<th>Branche</th>
-					<th>Fréquence</th>
-					<th>Photo</th>
-					</thead>
-					<tbody>
-					
-			<?php
-						
-			$stmt11 = $conn->query($sql50);
-            $row11 = $stmt11->fetchAll(PDO::FETCH_ASSOC);
-			if($row11){
-				$t=0;
-				foreach($row11 as $array11){
-					$t=$t+1;
-            $idca=$array11['type'];
-			$idcap=$array11['photo'];
-			$idco=$array11['frequence'];
-			$idci=$array11['branche'];
-			
-			?>
-			<tr>
-			<td><?php echo $idca?></td>
-			<td><?php echo $idci?></td>
-			<td><?php echo $idco?></td>
-			<td><img width="70px " src="<?php echo $idcap?>"/></td></tr>
-					</tbody>
-				
-				
-				
-						
-				
-						
-			
-			
-			
-			
-			
-			
-			
-			
-			
-				
-			
-				
-				
-			
-					
+				<div class="modal-content modal-lg" >
+					<div  class="text-dark alert alert-light ">
+					<label  ><Strong> INFORMATION BOITIER </Strong></label></div>
+					<table id="example" class="table table-hover">
+						<tbody>
 						<?php
-		}}
-		
+			$id = $fetch['id'];
+			$sql1 = $conn->prepare("select * from `patientboitier` WHERE `idp`  in (select `id` from `patient` where `id`='$id')");
+			$sql1->execute();
+			$sql3 = $conn->prepare("select * from `boitier` WHERE `id`  in (select `idb` from `patientboitier` where `idp`='$id')");
+			$sql3->execute();
+			$fetch3=$sql3->execute();
 			
 			
 			
+			  
+		while($fetch1 = $sql1->fetch()  ){
+			$fetch3=$sql3->fetch();
 			
-			
-			
-			
-			
-
 					
-				?>
-				
+
+
+$sql30="select count(idc) as id  from `association` where idb in (select id from `boitier` WHERE `id`  in (select `idb` from `patientboitier` where `idp`='$id'))";
+$stmt1 = $conn->query($sql30);
+$row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+$idb=$row1['id'];
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+ 
+$ta=$fetch3['id'];
+$sql50 ="select c.type,a.frequence,a.branche,c.photo from capteur c,association a where
+c.id=a.idc and idb='$ta'";
+?>
+
+<thead  class="table-light" >
+
+	<td><b>Référence boitier</b> : 
+		 <span class="weak"><?php echo $fetch3['ref']?></td>
+	
+	</thead>
+		
+	<thead  class="table-light" >
+	
+	<td><b>Date</b>        <span>      :  </span>             <?php echo $fetch1['datedebut']?></td>
+	</thead>
+	
+	<thead  class="table-light" >
+	<td><b>Nombre capteurs</b> :
+	 <?php echo $idb ?></td>
+	</thead>
+	
+	
+<td><b>Liste des capteurs </b></td>
+<div class="row">
+	<table>
+		<thead>
+		<th>Type</th>
+		<th>Branche</th>
+		<th>Fréquence</th>
+		<th>Photo</th>
+		</thead>
+		<tbody>
+		
+<?php
 			
-							
-         
+$stmt11 = $conn->query($sql50);
+$row11 = $stmt11->fetchAll(PDO::FETCH_ASSOC);
+if($row11){
+	$t=0;
+	foreach($row11 as $array11){
+		$t=$t+1;
+$idca=$array11['type'];
+$idcap=$array11['photo'];
+$idco=$array11['frequence'];
+$idci=$array11['branche'];
+
+?>
+<tr>
+<td><?php echo $idca?></td>
+<td><?php echo $idci?></td>
+<td><?php echo $idco?></td>
+<td><img width="70px " src="<?php echo $idcap?>"/></td></tr>
+		</tbody>
+	
+	
+	
+			
+	
+			
+
+
+
+
+
+
+
+
+
+	
+
+	
+	
+
+		
+			<?php
+}}
+
+
+
+
+
+
+
+
+
+
+		
+	?>
+	
+
+				
+
 </table>
-				
-							<div class="modal-footer">
-										<button class="btn btn-danger" data-dismiss="modal">Fermer</button>
+	
+				<div class="modal-footer">
+							<button class="btn btn-danger" data-dismiss="modal">Fermer</button>
 
-									</div>		
-						</div>
-						</div>
-					</div>
-                        
-                   </td>
-						<button  class="btn btn-outline-primary" data-toggle="modal" onclick="fat('<?php echo $idb ?>')" data-target="#p">  Voir ses Données
-                    </button>
+						</div>		
+			</div>
+			</div>
+		</div>
 			
-				
-                
-                    <?php } ?> 
+	   </td>
+	  
 
-					</tr>
-                   
-                  
-                    </tbody>
+
+		<td>
+			<button  class="btn btn-outline-primary" data-toggle="modal" onclick="fat('<?php echo $idb ?>')" data-target="#p">  Voir ses Données
+		</button>
+
+	
+	
+		<?php } ?> 
+
+		</tr>
+	   
+	  
+		</tbody>
 
 					
 	
