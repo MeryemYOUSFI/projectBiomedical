@@ -386,22 +386,26 @@
 			$sql50 ="select c.type,a.frequence,a.branche,c.photo from capteur c,association a where
 			c.id=a.idc and idb='$ta'";
 			?>
-			<div class="container">
+			
 			<thead  class="table-light" >
-				<th>REFERENCE BOITIER</th>
+			
+				<td><b>Référence boitier</b> : 
+				     <span class="weak"><?php echo $fetch3['ref']?></td>
+				
+				</thead>
+					
+				<thead  class="table-light" >
+				
+				<td><b>Date</b>        <span>      :  </span>             <?php echo $fetch1['datedebut']?></td>
 				</thead>
 				
-				<tr><td><?php echo $fetch3['ref']?></td></tr>
 				<thead  class="table-light" >
-				<th>DATE</th>
+				<td><b>Nombre capteurs</b> :
+				 <?php echo $idb ?></td>
 				</thead>
-				<tr><td><?php echo $fetch1['datedebut']?></td></tr>
-				<thead  class="table-light" >
-				<th>NOMBRE CAPTEURS</th>
-				</thead>
-				<tr><td><?php echo $idb ?></td></tr>
-				<thead  class="table-light" >
-			<th>LISTE DES CAPTEURS </thead>
+				
+				
+			<td><b>Liste des capteurs </b></td>
 			<div class="row">
 				<table>
 					<thead>
@@ -432,11 +436,45 @@
 			<td><?php echo $idco?></td>
 			<td><img width="70px " src="<?php echo $idcap?>"/></td></tr>
 					</tbody>
+				
+				
+				
+						
+				
+						
+			
+			
+			
+			
+			
+			
+			
+			
+			
+				
+			
+				
+				
+			
 					
 						<?php
 		}}
+		
+			
+			
+			
+			
+			
+			
+			
+			
+
+					
 				?>
-	
+				
+			
+							
+         
 </table>
 				
 							<div class="modal-footer">
@@ -448,38 +486,6 @@
 					</div>
                         
                    </td>
-                  
-          <!-- DELETE POP UP FORM (Bootstrap MODAL) -->
-<div class="modal fade" id="de<?php echo $fetch['id']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Retirer boitier patient </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="deleteBoitier.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="hidden" value="<?php echo $fetch['id']?>" name="id">
-
-                        <h4>Voulez vous retirer la boite de façon définitve?</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                        <button type="submit" name="deletedata" class="btn btn-primary">Oui! Supprimer </button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-                    <td>
 						<button  class="btn btn-outline-primary" data-toggle="modal" onclick="fat('<?php echo $idb ?>')" data-target="#p">  Voir ses Données
                     </button>
 			
