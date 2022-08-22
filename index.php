@@ -97,7 +97,7 @@ if (isset($_POST['username'])){
                 
                 <form action="" method="post" name="login" >
                     
-                 <h1><img  class="center" src="e-medecal.jpeg" width="170px " height="170px"  alt="logo"></h1>
+                 <h1><img  class="center" src="e-medecal.png" width="170px " height="170px"  alt="logo"></h1>
                  <style>
                  .center {
   display: block;
